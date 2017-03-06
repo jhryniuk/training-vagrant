@@ -17,12 +17,6 @@ Vagrant.configure(2) do |config|
       p.customize ["modifyvm", :id, "--cpuexecutioncap", "80"]
       p.cpus = 1
     end
-
-    v.vm.provision "ansible" do |ansible|
-      ansible.playbook = "haproxy.yaml"
-      ansible.inventory_path = "./hosts"
-      ansible.limit = "hp01"
-    end
   end
 
   config.vm.define "db01", primary: true do |v|
@@ -40,12 +34,6 @@ Vagrant.configure(2) do |config|
       p.customize ["modifyvm", :id, "--cpuexecutioncap", "80"]
       p.cpus = 2
     end
-
-    v.vm.provision "ansible" do |ansible|
-      ansible.playbook = "sql.yaml"
-      ansible.inventory_path = "./hosts"
-      ansible.limit = "db01"
-    end
   end
 
   config.vm.define "db02" do |v|
@@ -62,12 +50,6 @@ Vagrant.configure(2) do |config|
       p.customize ["modifyvm", :id, "--name", "hp-db02"]
       p.customize ["modifyvm", :id, "--cpuexecutioncap", "80"]
       p.cpus = 2
-    end
-
-    v.vm.provision "ansible" do |ansible|
-      ansible.playbook = "sql.yaml"
-      ansible.inventory_path = "./hosts"
-      ansible.limit = "db02"
     end
   end
 end
